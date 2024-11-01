@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Calendar from './Calendar';
 import Summary from './Summary';
@@ -7,10 +7,12 @@ import './styles.css';
 
 const App = () => {
     const [appointments, setAppointments] = useState([]);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchEvents = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get('https://backend-a065.onrender.com/appointments');
                 setAppointments(
@@ -21,28 +23,28 @@ const App = () => {
                 );
             } catch (error) {
                 console.error('Error fetching events:', error);
+                setError('Failed to load appointments. Please try again later.');
+            } finally {
+                setLoading(false);
             }
         };
         fetchEvents();
     }, []);
 
-    const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
     return (
         <Router>
             <div className="App">
-                <button className="menu-btn" onClick={toggleSidebar}>☰ Menu</button>
-                
-                {sidebarOpen && (
-                    <div className="sidebar">
-                        <button onClick={toggleSidebar} className="close-btn">X</button>
-                        <Link to="/calendar" onClick={toggleSidebar}>Calendar</Link>
-                        <Link to="/summary" onClick={toggleSidebar}>Summary</Link>
-                    </div>
-                )}
-                
+                <div className="sidebar">
+                    <h2>Zendenta Clinic</h2>
+                    <Link to="/calendar">Calendar</Link>
+                    <Link to="/summary">Summary</Link>
+                </div>
+
                 <div className="content">
+                    {loading && <p>Loading appointments...</p>}
+                    {error && <p className="error-message">{error}</p>}
                     <Routes>
+                        <Route path="/" element={<Navigate to="/calendar" />} />
                         <Route
                             path="/calendar"
                             element={<Calendar appointments={appointments} setAppointments={setAppointments} />}
