@@ -14,7 +14,7 @@ body {
   left: 0;
   top: 0;
   width: 20vw; /* Set sidebar width as 20% of the viewport */
-  max-width: 180px; /* Maximum width for larger screens */
+  max-width: 210px; /* Maximum width for larger screens */
   min-width: 180px; /* Minimum width for smaller screens */
   height: 100vh;
   background-color: #ffffff;
