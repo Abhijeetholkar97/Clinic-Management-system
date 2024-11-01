@@ -1,0 +1,29 @@
+/* src/Calendar.css */
+.calendar-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.calendar-container {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.appointments {
+    margin-bottom: 20px;
+}
+
+.appointment {
+    padding: 8px;
+    margin-bottom: 5px;
+    background-color: #e2e2e2;
+    border-radius: 4px;
+    cursor: pointer;
+}

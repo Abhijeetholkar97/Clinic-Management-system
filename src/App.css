@@ -1,0 +1,8 @@
+.app-container {
+  display: flex;
+}
+
+.calendar-container {
+  flex: 1;
+  padding: 1rem;
+}
